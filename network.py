@@ -22,7 +22,7 @@ lr = 0.001
 iter1 = 1#0
 batch_size = 100#0
 
-image_dir = '../training/'
+image_dir = 'training/'
 s_direct = '/home_local/shar_sc/cnn_model/model.ckpt'
 out_dir = '/home_local/shar_sc/cnn_result/'
 #    pass
@@ -94,7 +94,7 @@ def execute():
     epochs = iter1
     sess.run(tf.global_variables_initializer())
     
-    onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+    onlyfiles = [f for f in listdir(image_dir) if isfile(join(image_dir, f))]
     print("onlyfiles")
     exit
     
