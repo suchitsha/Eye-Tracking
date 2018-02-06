@@ -6,7 +6,7 @@ div_ver = 4
 def convertToGlobalBoxNumber(filename):
 	boxWidth = 1 / div_hor
 	boxHeight = 1 / div_ver
-	imageData = filename.split("-")
+	imageData = fileName.replace(".png","").split("-")
 	mouseX = float(imageData[1])
 	mouseY = float(imageData[2])
 	print(mouseX)
