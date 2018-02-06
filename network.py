@@ -22,7 +22,7 @@ lr = 0.001
 iter1 = 1#0
 batch_size = 100#0
 
-image_dir = '/home/shar_sc/images/'
+image_dir = '../training/'
 s_direct = '/home_local/shar_sc/cnn_model/model.ckpt'
 out_dir = '/home_local/shar_sc/cnn_result/'
 #    pass
