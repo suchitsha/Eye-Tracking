@@ -10,7 +10,7 @@ def takePicture(clickEvent):
 		print("clicked at: " + str(clickEvent.x) + ", " + str(clickEvent.y))
 		return_value, image = camera.read()
 		resized_image = cv2.resize(image, (500, 281)) 
-		cv2.imwrite('../data/'+str(time.time()) + 'opencv.png', resized_image)
+		cv2.imwrite('./data/'+str(time.time()) + '-' + str(clickEvent.x) + '-' + str(clickEvent.y) + '.png', resized_image)
 
 
 recorder = Recorder.record(takePicture)  # Replace print with any callback that accepts an 'event' arg
