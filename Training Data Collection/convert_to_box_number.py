@@ -6,7 +6,7 @@ yNumberOfBlocks = 4
 def convertToGlobalBoxNumber(filename):
 	boxWidth = 1 / xNumberOfBlocks
 	boxHeight = 1 / yNumberOfBlocks
-	imageData = filename.split("-")
+	imageData = fileName.replace(".png","").split("-")
 	mouseX = float(imageData[1])
 	mouseY = float(imageData[2])
 	print(mouseX)
