@@ -1,24 +1,24 @@
 import math
 
-xNumberOfBlocks = 5
-yNumberOfBlocks = 4
+div_hor = 5
+div_ver = 4
 
 def convertToGlobalBoxNumber(filename):
-	boxWidth = 1 / xNumberOfBlocks
-	boxHeight = 1 / yNumberOfBlocks
+	boxWidth = 1 / div_hor
+	boxHeight = 1 / div_ver
 	imageData = filename.split("-")
 	mouseX = float(imageData[1])
 	mouseY = float(imageData[2])
 	print(mouseX)
 	boxX = math.floor(mouseX / boxWidth)
 	if mouseX >= 1.0:
-		boxX = xNumberOfBlocks - 1
+		boxX = div_hor - 1
 	boxY = math.floor(mouseY / boxHeight)
 	if mouseY >= 1.0:
-		boxY = yNumberOfBlocks - 1
+		boxY = div_ver - 1
 	
 	
-	globalBoxNumber = (boxY * xNumberOfBlocks) + boxX
+	globalBoxNumber = (boxY * div_hor) + boxX
 	return globalBoxNumber
 
 

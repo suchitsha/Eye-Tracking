@@ -17,12 +17,11 @@ from os.path import isfile, join
 #def init(self):
 div_hor = 5 #50 # 20
 div_ver = 4
-num_images = 100 #TODO find this for folder
 lr = 0.001
-iter1 = 1#0
+epochs = 1#0
 batch_size = 100#0
 
-image_dir = 'training/'
+image_dir = 'data/'
 s_direct = '/home_local/shar_sc/cnn_model/model.ckpt'
 out_dir = '/home_local/shar_sc/cnn_result/'
 #    pass
@@ -68,15 +67,15 @@ def execute():
     #logits = tf.layers.dense(inputs=dropout, units=20)
     uni = div_hor*div_ver
     logits = tf.layers.dense(inputs=dense3, units=uni)
-    out_shape = tf.reshape(logits,[-1,div_hor,div_ver] )    
+    #out_shape = tf.reshape(logits,[-1,div_hor,div_ver] )    
     # Pass logits through sigmoid to get reconstructed image
     #decoded = tf.nn.sigmoid(logits)
     loss = None
     train_op = None
 
     # Pass logits through sigmoid and calculate the cross-entropy loss
-    #loss = tf.nn.sigmoid_cross_entropy_with_logits(labels=targets_, logits=logits)
-    loss = tf.nn.sigmoid_cross_entropy_with_logits(labels=targets_, logits=out_shape)
+    loss = tf.nn.sigmoid_cross_entropy_with_logits(labels=targets_, logits=logits)
+    #loss = tf.nn.sigmoid_cross_entropy_with_logits(labels=targets_, logits=out_shape)
     
     # Get cost and define the optimizer
     cost = tf.reduce_mean(loss)
@@ -91,12 +90,10 @@ def execute():
     direct = image_dir + 'direc.p'
         
     sess = tf.Session()
-    epochs = iter1
     sess.run(tf.global_variables_initializer())
     
     onlyfiles = [f for f in listdir(image_dir) if isfile(join(image_dir, f))]
-    print("onlyfiles")
-    exit
+    #print(onlyfiles)
     
     # for testing
     images_test = []
@@ -105,16 +102,16 @@ def execute():
     step = 0
     #read images
     for e  in range(epochs):
-        for i in range(num_images):
-            img_direct = image_dir + 'fig_' + str(i) + '.png'
+        for i in range(len(onlyfiles)):
+            img_direct = onlyfiles[i]#image_dir + 'fig_' + str(i) + '.png'
             img = cv2.imread(img_direct,0)
-            img = cv2.resize(img,dsize=(128,128) , interpolation = cv2.INTER_CUBIC)
+            img = cv2.resize(img,dsize=(500,281) , interpolation = cv2.INTER_CUBIC) #(128,128) , interpolation = cv2.INTER_CUBIC)
             #cv2.imshow('image',img)
             #Numpy array
             np_image_data = np.asarray(img)
             np_image_data = cv2.normalize(np_image_data.astype('float'), None, -0.5, .5, cv2.NORM_MINMAX)
             np_final = np.expand_dims(np_image_data,axis=0)
-            np_final = np_final.reshape((128,128,-1))   
+            np_final = np_final.reshape((500,281,-1))   
             images_in = []
             images_in.append(np_final)
             inp = np.asarray(objs[i])
