@@ -20,7 +20,7 @@ div_hor = 5 #50 # 20
 div_ver = 4
 out_size = div_hor*div_ver
 lr = 0.001
-epochs = 100#0
+epochs = 1#0
 batch_size = 100#0
 
 image_dir = 'data/'
@@ -54,30 +54,30 @@ def execute():
     #plt.imshow(img.reshape((28, 28)), cmap='Greys_r')
     learning_rate = lr#0.001
     # Input and target placeholders
-    inputs_ = tf.placeholder(tf.float32, (None, 500,280,1), name="input")
+    inputs_ = tf.placeholder(tf.float32, (None, 240,100,1), name="input")
     targets_ = tf.placeholder(tf.float32, (None, out_size), name="target")
 
     ### Encoder
     conv1 = tf.layers.conv2d(inputs=inputs_, filters=64, kernel_size=(3,3), padding='same', activation=tf.nn.relu)
-    # Now 500x280x64
+    # Now 240x100x64
     maxpool1 = tf.layers.max_pooling2d(conv1, pool_size=(2,2), strides=(2,2), padding='same')
-    # Now 250x140x64
+    # Now 120x50x64
     conv2 = tf.layers.conv2d(inputs=maxpool1, filters=48, kernel_size=(3,3), padding='same', activation=tf.nn.relu)
-    # Now 250x140x48
+    # Now 120x50x48
     maxpool2 = tf.layers.max_pooling2d(conv2, pool_size=(2,2), strides=(2,2), padding='same')
-    # Now 125x70x48
+    # Now 60x25x48
     conv3 = tf.layers.conv2d(inputs=maxpool2, filters=32, kernel_size=(3,3), padding='same', activation=tf.nn.relu)
-    # Now 125x70x32
+    # Now 60x25x32
     encoded = tf.layers.max_pooling2d(conv3, pool_size=(2,2), strides=(2,2), padding='same')
-    # Now 63x35x32
+    # Now 30x13x32
 
     conv3_1 = tf.layers.conv2d(inputs=encoded, filters=8, kernel_size=(3,3), padding='same', activation=tf.nn.relu)
-    # Now 63x35x8
+    # Now 30x13x8
     encoded2 = tf.layers.max_pooling2d(conv3_1, pool_size=(2,2), strides=(2,2), padding='same')
-    # Now 32x18x8
+    # Now 15x7x8
         
     # Dense Layer
-    encoded2_flat = tf.reshape(encoded2, [-1, 32 * 18 * 8])
+    encoded2_flat = tf.reshape(encoded2, [-1, 15 * 7 * 8])
     dense = tf.layers.dense(inputs=encoded2_flat, units=512, activation=tf.nn.relu)
     dense2 = tf.layers.dense(inputs=dense, units=512, activation=tf.nn.relu)
     dense3 = tf.layers.dense(inputs=dense2, units=512, activation=tf.nn.relu)
@@ -130,13 +130,13 @@ def execute():
             img_direct = image_dir + str(fname[i])#image_dir + 'fig_' + str(i) + '.png'
             img = cv2.imread(img_direct,0)
             #img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            img = cv2.resize(img,dsize=(500,280) , interpolation = cv2.INTER_CUBIC) #(128,128) , interpolation = cv2.INTER_CUBIC)
+            img = cv2.resize(img,dsize=(240,100) , interpolation = cv2.INTER_CUBIC) #(128,128) , interpolation = cv2.INTER_CUBIC)
             #cv2.imshow('image',img)
             #Numpy array
             np_image_data = np.asarray(img)
             np_image_data = cv2.normalize(np_image_data.astype('float'), None, -0.5, .5, cv2.NORM_MINMAX)
             np_final = np.expand_dims(np_image_data,axis=0)
-            np_final = np_final.reshape((500,280,-1))   
+            np_final = np_final.reshape((240,100,-1))   
             images_in = []
             images_in.append(np_final)
             #images_in.append(np_final)
@@ -182,13 +182,13 @@ def execute():
             img_direct1 = test_dir + str(fname1[fil])#image_dir + 'fig_' + str(i) + '.png'
             img1 = cv2.imread(img_direct1,0)
             #img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            img1 = cv2.resize(img1,dsize=(500,280) , interpolation = cv2.INTER_CUBIC) #(128,128) , interpolation = cv2.INTER_CUBIC)
+            img1 = cv2.resize(img1,dsize=(240,100) , interpolation = cv2.INTER_CUBIC) #(128,128) , interpolation = cv2.INTER_CUBIC)
             #cv2.imshow('image',img)
             #Numpy array
             np_image_data1 = np.asarray(img1)
             np_image_data1 = cv2.normalize(np_image_data1.astype('float'), None, -0.5, .5, cv2.NORM_MINMAX)
             np_final1 = np.expand_dims(np_image_data1,axis=0)
-            np_final1 = np_final1.reshape((500,280,-1)) 
+            np_final1 = np_final1.reshape((240,100,-1)) 
             images_in1 = []
             images_in1.append(np_final1)
             #print("saehadhah", len(images_in1))

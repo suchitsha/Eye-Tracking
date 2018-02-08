@@ -1,7 +1,8 @@
 from os import listdir
 from os import rename
 from os.path import isfile, join
-onlyfiles = [f for f in listdir("./robbie") if isfile(join("./robbie", f))]
+dir_name = "./suchit1/"
+onlyfiles = [f for f in listdir(dir_name) if isfile(join(dir_name, f))]
 
 for fileName in onlyfiles:
 	if fileName.startswith("._"):
@@ -11,4 +12,5 @@ for fileName in onlyfiles:
 		continue
 	mouseX = float(imageData[1]) / 1440
 	mouseY = float(imageData[2]) / 900
-	rename("./robbie/"+fileName, "./robbie/"+imageData[0]+"-"+str(mouseX)+"-"+str(mouseY)+".png")
+	rename(dir_name+str(fileName),dir_name+imageData[0]+"-"+str(mouseX)+"-"+str(mouseY)+".png")
+
