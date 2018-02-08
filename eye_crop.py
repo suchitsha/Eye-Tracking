@@ -3,7 +3,7 @@ import face_recognition
 from os import listdir
 from os.path import isfile, join
 
-image_dir = 'suchit/'
+image_dir = 'robbie/'
 fname = [f for f in listdir(image_dir) if isfile(join(image_dir, f))]
     
 for fil in range(len(fname)): 

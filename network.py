@@ -20,7 +20,7 @@ div_hor = 5 #50 # 20
 div_ver = 4
 out_size = div_hor*div_ver
 lr = 0.001
-epochs = 100#0
+epochs = 1#0
 batch_size = 100#0
 
 image_dir = 'data/'

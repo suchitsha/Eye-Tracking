@@ -1,7 +1,7 @@
 from os import listdir
 from os import rename
 from os.path import isfile, join
-dir_name = "./suchit1/"
+dir_name = "./suchit11/"
 onlyfiles = [f for f in listdir(dir_name) if isfile(join(dir_name, f))]
 
 for fileName in onlyfiles:

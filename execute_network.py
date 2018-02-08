@@ -25,7 +25,8 @@ batch_size = 100#0
 
 image_dir = 'data/'
 test_dir = 'test/'
-s_direct = 'model/model.ckpt'
+#s_direct = 'model/model.ckpt'
+s_direct = 'model_backup/model.ckpt-315800'
 #out_dir = '/home_local/shar_sc/cnn_result/'
 #    pass
 
@@ -112,6 +113,9 @@ def execute():
     sess = tf.Session()
     sess.run(tf.global_variables_initializer())
     
+    
+    '''
+    
     fname = [f for f in listdir(image_dir) if isfile(join(image_dir, f))]
     #print(fname)
     objs = []
@@ -171,10 +175,16 @@ def execute():
         
         save_path = saver.save(sess,s_direct,global_step=step)
         print("Model saved in file: %s" % save_path)
-
+    '''
+    
     fname1 = [f for f in listdir(test_dir) if isfile(join(test_dir, f))]
     lab_arr = []
     expected_box = []
+    
+    #restore model
+    saver.restore(sess, s_direct) #("/tmp/model.ckpt")
+    print("Model restored.")
+    
     for fil in range(len(fname1)):            
             out_val1 = convertToGlobalBoxNumber(str(fname1[fil]))
             #print("expected_output",out_val1)
@@ -199,35 +209,6 @@ def execute():
             lab_arr.append(max_index)
     print("results:", lab_arr)    
     print("expected_box",expected_box)        
-    '''
-    lab_arr = []   
-    print("image_test size",len(images_test))
-    #for i_test in range(len(images_test)):
-    #temp = []
-    #temp.append(images_test[0])
-    #reconstructed = sess.run(logits, feed_dict={inputs_: temp})
-    reconstructed = sess.run(logits, feed_dict={inputs_: images_test})
-    print("Raw reconstructed:", reconstructed)
-    #reconstructed = np.asarray(reconstructed).reshape([-1,out_size])
-    print("BBBBBBB",len(reconstructed))
-    print("BBBBBBB",len(reconstructed[0]))
-    #for res in range(len(reconstructed)):
-    #print("AAAAAAA",reconstructed)
-    #max_index = argmax(reconstructed)
-    #lab_arr.append(max_index)
-    #print("Reshaped reconstructed:", lab_arr)
-    '''
-    '''
-    for res in range(len(reconstructed)):
-        lab_arr = []
-        for lab in range(len(reconstructed[res])):
-            max_index = argmax(reconstructed[res][lab, :])
-            lab_arr.append(max_index)
-        print("argmax index array:" , lab_arr)
-        generate_result(str(res), lab_arr)
-        print("reconstructed {}: {}".format(str(res),str(reconstructed[res])))
-        generate_result(str(res) + str('_o'),objs_test[res] )
-    '''            
     #predictions = list(itertools.islice(reconstructed, 1))
     #predictions = np.asarray(predictions).reshape([20,4]) 
     #print("Predictions: {}".format(str(len(predictions))))
