@@ -19,9 +19,9 @@ from os.path import isfile, join
 div_hor = 5 #50 # 20
 div_ver = 4
 out_size = div_hor*div_ver
-lr = 0.000001 #4 0s
-epochs = 20#0
-batch_size = 100#0
+lr = 0.00001 #4 0s
+epochs = 700 #0
+batch_size = 500#0
 
 image_dir = 'data/'
 test_dir = 'test/'
@@ -175,6 +175,7 @@ def execute():
     fname1 = [f for f in listdir(test_dir) if isfile(join(test_dir, f))]
     lab_arr = []
     expected_box = []
+    result_arr = []
     for fil in range(len(fname1)):            
             out_val1 = convertToGlobalBoxNumber(str(fname1[fil]))
             #print("expected_output",out_val1)
@@ -198,7 +199,26 @@ def execute():
             max_index = argmax(reconstructed)
             lab_arr.append(max_index)
     print("results:", lab_arr)    
-    print("expected_box",expected_box)        
+    print("expected_box",expected_box) 
+    
+    result_arr.append(lab_arr)
+    result_arr.append(expected_box)
+    data_file_p = open("result.p","a+b")#wb 
+    pickle.dump(result_arr, data_file_p)
+    data_file_p.close() 
+  
+    ''' 
+    #To read data
+    objs = []
+    f = open("data.p","rb")
+    while 1:
+        try:
+            objs.append(pickle.load(f))
+        except EOFError:
+            break
+    f.close()
+    print objs
+    '''       
     '''
     lab_arr = []   
     print("image_test size",len(images_test))
