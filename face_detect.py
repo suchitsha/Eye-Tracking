@@ -3,10 +3,12 @@ import face_recognition
 from os import listdir
 from os.path import isfile, join
 
-image_dir = 'ryan/'
+image_dir = 'robbie/'
 fname = [f for f in listdir(image_dir) if isfile(join(image_dir, f))]
     
 for fil in range(len(fname)): 
+    if fname[fil].startswith(".DS_Store"):
+        continue
     image = face_recognition.load_image_file(image_dir + str(fname[fil]))
     # Find all the faces in the image using the default HOG-based model.
     # This method is fairly accurate, but not as accurate as the CNN model and not GPU accelerated.
